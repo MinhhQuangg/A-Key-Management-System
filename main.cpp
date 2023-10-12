@@ -64,3 +64,44 @@ bool reader(string input_filename, Employee employees[], int& nEmployees) {
    input.close();
    return true; 
 }
+void writer(string output_filename, Employee employees[], int nEmployees) {
+   int i;
+   int j;
+   ofstream output; 
+   output.open(output_filename);
+   
+   output << nEmployees << endl;
+   for (i=0; i < nEmployees; i++) {
+      output << employees[i].name << endl;
+      output << employees[i].nKeysPossessed;
+      for (j=0; j<employees[i].nKeysPossessed; j++) {
+         output << " " << employees[i].keys[j];
+      }
+      output << endl;
+   }
+   output.close();
+}
+bool addKeyForEmployee(Employee employees[], int nEmployees, string emp_name, string newKey) {
+   int i;
+   int j;
+   for (i=0; i < nEmployees; i++) {
+      if (emp_name == employees[i].name) {
+         if (employees[i].nKeysPossessed ==5) {
+            cout << "This employee already has 5 keys!" << endl;
+            return false;
+         } else if (employees[i].nKeysPossessed < 5) {
+            for (j=0; j < employees[i].nKeysPossessed; j++) {
+               if (newKey == employees[i].keys[j]) {
+                  cout << "This employee already has this key!"<< endl;
+                  return false;
+               }
+            }
+         }
+         employees[i].keys[employees[i].nKeysPossessed] = newKey; 
+         employees[i].nKeysPossessed ++;
+         return true;
+      }
+   }
+   cout << "Cannot find the specified employee!" << endl;
+   return false;
+}
