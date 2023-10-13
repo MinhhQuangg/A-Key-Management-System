@@ -36,9 +36,18 @@ int main() {
    
    if(!reader(inputFile, employees, nEmployees)) {
       cout << "File not found, exiting the program..." << endl;
+   } else {
+      while(true) {
+      cout <<"Please select from the following options: "<< endl; 
+      cout <<"  1. show all employees and their keys"<< endl;
+      cout <<"  2. show the keys an employee possesses"<< endl;
+      cout <<"  3. show which employees possess a specific key"<< endl;
+      cout <<"  4. add a key to an employee"<< endl;
+      cout <<"  5. return a key by an employee"<< endl;
+      cout <<"  6. save the current key status"<< endl;
+      cout <<"  7. exit the program"<< endl;
    }
 }
-
 bool reader(string input_filename, Employee employees[], int& nEmployees) {
     int i;
    int j;
@@ -103,5 +112,37 @@ bool addKeyForEmployee(Employee employees[], int nEmployees, string emp_name, st
       }
    }
    cout << "Cannot find the specified employee!" << endl;
+   return false;
+}
+bool returnAKey(Employee employees[], int nEmployees, string emp_name, string returnKey) {
+   int i;
+   int j;
+   bool check1 = false;
+   bool check2 = false;
+   int key;
+   for (i=0; i < nEmployees; i++) {
+      if (emp_name == employees[i].name) {
+         check2 = true;
+         for (j=0; j < employees[i].nKeysPossessed; j++) {
+            if (employees[i].keys[j] == returnKey) {
+               check1 = true;
+               key = j;
+               break;
+            }
+         }
+         if(!check1) {
+            cout << "This employee does not have the specified key!" << endl;
+         } else {
+            for (j = key; j < employees[i].nKeysPossessed; j++) {
+               employees[i].keys[j] = employees[i].keys[j+1];
+            }
+            employees[i].nKeysPossessed--;
+            return true;
+         }
+      }
+   }
+   if(!check2) {
+      cout << "Cannot find the specified employee!" << endl;
+   }
    return false;
 }
