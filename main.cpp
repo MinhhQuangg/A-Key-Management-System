@@ -46,6 +46,51 @@ int main() {
       cout <<"  5. return a key by an employee"<< endl;
       cout <<"  6. save the current key status"<< endl;
       cout <<"  7. exit the program"<< endl;
+      cin >> option;
+      cin.ignore();
+      if (option == 1) {
+         for (i =0; i < nEmployees; i++) {
+            cout << "Name: " << employees[i].name << endl;
+            cout << "Keys possessed: ";
+            for ( j = 0; j < employees[i].nKeysPossessed; j ++ ) {
+               cout << employees[i].keys[j] << " ";
+            }
+            cout << endl;
+         }
+
+      } else if (option == 2) {
+         cout << "Please enter employee's name: "; 
+         getline(cin, inputName);
+         for (i=0; i< nEmployees;i++) {
+            if(inputName == employees[i].name) {
+               check1 = true;
+               cout << inputName << " possess the following keys: ";
+               for ( j = 0; j < employees[i].nKeysPossessed; j ++ ) {
+                  cout << employees[i].keys[j] << " ";
+               }
+               cout << endl;
+            }
+         }
+         if (!check1) {
+            cout << "Cannot find the specified employee!" << endl;
+         }
+      } else if(option==3){
+         cout << "Please enter a key: "; 
+         getline(cin, key); 
+         for (i =0; i < nEmployees; i++) {
+            for (j = 0; j < employees[i].nKeysPossessed; j ++ ) {
+               if (key == employees[i].keys[j]) {
+                  check2 = true;
+                  cout << employees[i].name << ", ";
+               }
+            }
+         }
+         if(!check2) {
+            cout << "No one possesses this key." << endl;
+         } else { 
+            cout << "possess this key." << endl;
+         }
+      }
    }
 }
 bool reader(string input_filename, Employee employees[], int& nEmployees) {
